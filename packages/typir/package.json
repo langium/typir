@@ -1,0 +1,42 @@
+{
+  "name": "typir",
+  "version": "0.0.1",
+  "description": "General purpose type checking library",
+  "homepage": "https://langium.org",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "typesystem",
+    "typescript"
+  ],
+  "license": "MIT",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf lib coverage",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "lint": "eslint src test --ext .ts",
+    "publish:next": "npm --no-git-tag-version version \"$(semver $npm_package_version -i minor)-next.$(git rev-parse --short HEAD)\" && npm publish --tag next",
+    "publish:latest": "npm publish --tag latest"
+  },
+  "volta": {
+    "node": "16.19.0",
+    "npm": "8.19.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/langium/langium",
+    "directory": "packages/langium"
+  },
+  "bugs": "https://github.com/langium/langium/issues",
+  "author": {
+    "name": "TypeFox",
+    "url": "https://www.typefox.io"
+  }
+}
