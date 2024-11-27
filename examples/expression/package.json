@@ -1,0 +1,30 @@
+{
+    "name": "typir-example-expression",
+    "displayName": "expression",
+    "version": "0.0.2",
+    "private": true,
+    "description": "",
+    "author": {
+        "name": "TypeFox",
+        "url": "https://www.typefox.io"
+    },
+    "license": "MIT",
+    "type": "module",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "volta": {
+        "node": "18.20.4",
+        "npm": "10.7.0"
+    },
+    "scripts": {
+        "build": "tsc -b tsconfig.json",
+        "clean": "shx rm -rf out",
+        "lint": "eslint src --ext ts",
+        "test": "vitest",
+        "watch": "concurrently -n tsc -c blue \"tsc -b tsconfig.json --watch\""
+    },
+    "dependencies": {
+        "typir": "~0.0.2"
+    }
+}
