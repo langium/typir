@@ -83,7 +83,7 @@ export class UniqueClassValidation implements ValidationRuleWithBeforeAfter {
     }
 }
 
-interface UniqueMethodValidationEntry {
+export interface UniqueMethodValidationEntry {
     languageNode: unknown;
     classType: ClassType;
 }

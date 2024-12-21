@@ -29,7 +29,7 @@ export function isInferenceProblem(problem: unknown): problem is InferenceProble
 export type InferenceRuleNotApplicable = 'N/A'; // or 'undefined' instead?
 export const InferenceRuleNotApplicable = 'N/A'; // or 'undefined' instead?
 
-type TypeInferenceResultWithoutInferringChildren =
+export type TypeInferenceResultWithoutInferringChildren =
     /** the identified type */
     Type |
     /** 'N/A' to indicate, that the current inference rule is not applicable for the given language node at all */
