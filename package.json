@@ -20,6 +20,7 @@
         "build": "tsc -b tsconfig.build.json && npm run build --workspaces",
         "watch": "concurrently -n typir,typir-langium,ox,lox -c blue,blue,green,green \"tsc -b tsconfig.build.json -w\" \"npm run watch --workspace=typir\" \"npm run watch --workspace=typir-langium\" \"npm run watch --workspace=examples/ox\" \"npm run watch --workspace=examples/lox\"",
         "lint": "npm run lint --workspaces",
+        "docs": "typedoc",
         "test": "vitest",
         "test:run": "vitest --run",
         "test-ui": "vitest --ui",
@@ -41,6 +42,7 @@
         "eslint-plugin-header": "~3.1.1",
         "fs-extra": "^11.2.0",
         "shx": "~0.3.4",
+        "typedoc": "^0.27.5",
         "typescript": "~5.5.4",
         "vitest": "~2.1.2"
     },

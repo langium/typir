@@ -3,6 +3,7 @@
 .vscode-test/
 coverage/
 dist/
+docs/
 bin/
 lib/
 out/
