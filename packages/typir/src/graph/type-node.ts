@@ -13,14 +13,16 @@ import { TypeEdge } from './type-edge.js';
 
 /**
  * The transitions between the states of a type are depicted as state machine:
+ *
  * ```mermaid
-stateDiagram-v2
-    [*] --> Invalid
-    Invalid --> Identifiable
-    Identifiable --> Completed
-    Completed --> Invalid
-    Identifiable --> Invalid
-```
+ * stateDiagram-v2
+ *     [*] --> Invalid
+ *     Invalid --> Identifiable
+ *     Identifiable --> Completed
+ *     Completed --> Invalid
+ *     Identifiable --> Invalid
+ * ```
+ *
  * A state is 'Completed', when all its dependencies are available, i.e. the types of all its properties are available.
  * A state is 'Identifiable', when all those dependencies are available which are required to calculate the identifier of the type.
  * A state is 'Invalid' otherwise.

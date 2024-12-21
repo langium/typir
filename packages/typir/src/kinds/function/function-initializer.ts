@@ -270,7 +270,7 @@ export class FunctionTypeInitializer<T> extends TypeInitializer<FunctionType> im
 
 }
 
-interface FunctionInferenceRules {
+export interface FunctionInferenceRules {
     inferenceForCall?: TypeInferenceRule;
     validationForCall?: ValidationRule;
     inferenceForDeclaration?: TypeInferenceRule;

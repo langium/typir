@@ -60,14 +60,14 @@ export interface CreateFunctionTypeDetails<T> extends FunctionTypeDetails {
 }
 
 /** Collects all functions with the same name */
-interface OverloadedFunctionDetails {
+export interface OverloadedFunctionDetails {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     overloadedFunctions: Array<SingleFunctionDetails<any>>;
     inference: CompositeTypeInferenceRule; // collects the inference rules for all functions with the same name
     sameOutputType: Type | undefined; // if all overloaded functions with the same name have the same output/return type, this type is remembered here
 }
 
-interface SingleFunctionDetails<T> {
+export interface SingleFunctionDetails<T> {
     functionType: FunctionType;
     inferenceRuleForCalls?: InferFunctionCall<T>;
 }
