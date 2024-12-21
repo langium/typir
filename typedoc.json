@@ -3,5 +3,6 @@
   "entryPointStrategy": "packages",
   "out": "./docs",
   "includeVersion": true,
-  "githubPages": true
+  "githubPages": true,
+  "plugin": ["typedoc-plugin-mermaid"]
 }
