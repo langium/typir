@@ -11,8 +11,10 @@ import { validate } from '../src/validator.js';
 const typir = initializeTypir();
 
 describe('Validator', () => {
-    test('quak', () => {
-        expectValidationMessages('PRINT 1;');
+    test('Positives', () => {
+        expectValidationMessages('PRINT 1+2+3;');
+        expectValidationMessages('PRINT "Hallo!";');
+        expectValidationMessages('PRINT "Hallo!"+"Welt!";');
     });
 });
 

@@ -80,7 +80,7 @@ export type Model = Array<VariableDeclaration | Printout>;
 export type Node = Expression | Printout | VariableDeclaration;
 
 export function isAstNode(node: unknown): node is Node {
-    return Object.getOwnPropertyNames(node).includes('type') && ['variable-usage', 'unary', 'binary', 'numeric', 'string', 'printout', 'variable-declaration'].includes(node as Node['type']);
+    return Object.getOwnPropertyNames(node).includes('type') && ['variable-usage', 'unary', 'binary', 'numeric', 'string', 'printout', 'variable-declaration'].includes((node as Node).type);
 }
 
 export namespace AST {
