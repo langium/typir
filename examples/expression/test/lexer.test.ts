@@ -4,7 +4,7 @@
  * terms of the MIT License, which is available in the project root.
  ******************************************************************************/
 import { describe, expect, test } from 'vitest';
-import { tokenize, TokenType } from '../src/tokenizer.js';
+import { tokenize, TokenType } from '../src/lexer.js';
 
 function expectTokenTypes(text: string, ...expecteds: TokenType[]) {
     const actuals = [...tokenize(text)].map(t => t.type);

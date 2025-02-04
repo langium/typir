@@ -4,13 +4,13 @@
  * terms of the MIT License, which is available in the project root.
  ******************************************************************************/
 
-import { Expression, BinaryExpression, UnaryExpression, Identifier, Numeric, CharString, Variable, Printout, Model as AST } from './ast.js';
-import { Token, tokenize, TokenType } from './tokenizer.js';
+import { Expression, BinaryExpression, UnaryExpression, VariableUsage, Numeric, CharString, VariableDeclaration, Printout, Model as AST } from './ast.js';
+import { Token, tokenize, TokenType } from './lexer.js';
 
 export class Parser {
     private tokens: Token[];
     private tokenIndex: number;
-    private symbols: Record<string, Variable>;
+    private symbols: Record<string, VariableDeclaration>;
     private skip(...tokenTypes: TokenType[]) {
         while(this.tokenIndex < this.tokens.length && tokenTypes.includes(this.tokens[this.tokenIndex].type)) {
             this.tokenIndex++;
@@ -88,7 +88,7 @@ export class Parser {
             return {
                 type: 'variable-usage',
                 ref: symbol
-            } as Identifier;
+            } as VariableUsage;
         } else if(this.canConsume('NUM')) {
             return {
                 type: 'numeric',
@@ -104,7 +104,7 @@ export class Parser {
             throw new Error("Don't know how to continue...");
         }
     }
-    private variableDeclaration(): Variable {
+    private variableDeclaration(): VariableDeclaration {
         this.consume('VAR');
         const name = this.consume('ID').content;
         this.consume('ASSIGN');

@@ -9,5 +9,7 @@
         { "path": "examples/lox/tsconfig.test.json" },
         { "path": "examples/ox/tsconfig.src.json" },
         { "path": "examples/ox/tsconfig.test.json" },
+        { "path": "examples/expression/tsconfig.src.json" },
+        { "path": "examples/expression/tsconfig.test.json" },
     ]
  }

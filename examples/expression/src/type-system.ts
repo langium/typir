@@ -3,4 +3,55 @@
  * This program and the accompanying materials are made available under the
  * terms of the MIT License, which is available in the project root.
  ******************************************************************************/
+import { createTypirServices, InferenceRuleNotApplicable, InferOperatorWithMultipleOperands, InferOperatorWithSingleOperand } from 'typir';
+import { BinaryExpression, isAstNode, isBinaryExpression, isNumeric, isPrintout, isUnaryExpression, isVariableDeclaration, isVariableUsage, UnaryExpression } from './ast.js';
 
+export function initializeTypir() {
+    const typir = createTypirServices();
+    const typeNumber = typir.factory.Primitives.create({
+        primitiveName: 'number', inferenceRules: [
+            isNumeric,
+            (node: unknown) => isAstNode(node) && node.type === 'numeric'
+        ]
+    });
+    const typeString = typir.factory.Primitives.create({
+        primitiveName: 'void', inferenceRules:
+            (node: unknown) => isAstNode(node) && node.type === 'string'
+    });
+    //const typeVoid = typir.factory.Primitives.create({ primitiveName: 'void' });
+
+    const binaryInferenceRule: InferOperatorWithMultipleOperands<BinaryExpression> = {
+        filter: isBinaryExpression,
+        matching: (node: BinaryExpression, name: string) => node.op === name,
+        operands: (node: BinaryExpression) => [node.left, node.right],
+    };
+    typir.factory.Operators.createBinary({ name: '+', signature: { left: typeNumber, right: typeNumber, return: typeNumber }, inferenceRule: binaryInferenceRule });
+    typir.factory.Operators.createBinary({ name: '-', signature: { left: typeNumber, right: typeNumber, return: typeNumber }, inferenceRule: binaryInferenceRule });
+    typir.factory.Operators.createBinary({ name: '/', signature: { left: typeNumber, right: typeNumber, return: typeNumber }, inferenceRule: binaryInferenceRule });
+    typir.factory.Operators.createBinary({ name: '*', signature: { left: typeNumber, right: typeNumber, return: typeNumber }, inferenceRule: binaryInferenceRule });
+    typir.factory.Operators.createBinary({ name: '%', signature: { left: typeNumber, right: typeNumber, return: typeNumber }, inferenceRule: binaryInferenceRule });
+    typir.factory.Operators.createBinary({ name: '+', signature: { left: typeString, right: typeString, return: typeString }, inferenceRule: binaryInferenceRule });
+
+    const unaryInferenceRule: InferOperatorWithSingleOperand<UnaryExpression> = {
+        filter: isUnaryExpression,
+        matching: (node: UnaryExpression, name: string) => node.op === name,
+        operand: (node: UnaryExpression, _name: string) => node.operand,
+    };
+    typir.factory.Operators.createUnary({ name: '+', signature: { operand: typeNumber, return: typeNumber }, inferenceRule: unaryInferenceRule });
+    typir.factory.Operators.createUnary({ name: '-', signature: { operand: typeNumber, return: typeNumber }, inferenceRule: unaryInferenceRule });
+
+    typir.Conversion.markAsConvertible(typeNumber, typeString, 'IMPLICIT_EXPLICIT');
+
+    typir.Inference.addInferenceRule((languageNode) => {
+        if (isVariableDeclaration(languageNode)) {
+            return languageNode.value;
+        } else if (isVariableUsage(languageNode)) {
+            return languageNode.ref;
+        } else if (isPrintout(languageNode)) {
+            return typeString;
+        }
+        return InferenceRuleNotApplicable;
+    });
+
+    return typir;
+}

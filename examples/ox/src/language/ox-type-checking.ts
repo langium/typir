@@ -185,7 +185,6 @@ export class OxTypeCreator extends AbstractLangiumTypeCreator {
     }
 }
 
-
 export function createOxTypirModule(langiumServices: LangiumSharedCoreServices): Module<LangiumServicesForTypirBinding, PartialTypirLangiumServices> {
     return {
         // specific configurations for OX

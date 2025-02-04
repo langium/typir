@@ -25,6 +25,6 @@
         "watch": "concurrently -n tsc -c blue \"tsc -b tsconfig.json --watch\""
     },
     "dependencies": {
-        "typir": "~0.0.2"
+        "typir": "0.1.2"
     }
 }

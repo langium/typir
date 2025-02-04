@@ -9,6 +9,7 @@ async function runUpdate() {
     await Promise.all([
         replaceAll('typir', true, versions),
         replaceAll('typir-langium', true, versions),
+        replaceAll('expression', false, versions),
         replaceAll('ox', false, versions),
         replaceAll('lox', false, versions),
     ]);

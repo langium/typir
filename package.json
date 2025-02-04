@@ -49,6 +49,7 @@
         "packages/typir-langium",
         "examples/expression",
         "examples/ox",
-        "examples/lox"
+        "examples/lox",
+        "examples/expression"
     ]
 }
