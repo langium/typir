@@ -12,9 +12,13 @@ const typir = initializeTypir();
 
 describe('Validator', () => {
     test('Positives', () => {
+        expectValidationMessages('VAR X = 1+2+3; PRINT X;');
         expectValidationMessages('PRINT 1+2+3;');
         expectValidationMessages('PRINT "Hallo!";');
         expectValidationMessages('PRINT "Hallo!"+"Welt!";');
+    });
+    test('Negatives', () => {
+        expectValidationMessages('PRINT "1"-"2";', 'The given operands for the overloaded function \'-\' match the expected types only partially.');
     });
 });
 

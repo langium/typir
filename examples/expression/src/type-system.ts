@@ -3,7 +3,7 @@
  * This program and the accompanying materials are made available under the
  * terms of the MIT License, which is available in the project root.
  ******************************************************************************/
-import { createTypirServices, InferenceRuleNotApplicable, InferOperatorWithMultipleOperands, InferOperatorWithSingleOperand, isAssignabilityProblem, isInferenceProblem, NO_PARAMETER_NAME, TypirServices, ValidationMessageDetails } from 'typir';
+import { createTypirServices, InferenceRuleNotApplicable, InferOperatorWithMultipleOperands, InferOperatorWithSingleOperand, NO_PARAMETER_NAME } from 'typir';
 import { BinaryExpression, isAstNode, isBinaryExpression, isNumeric, isPrintout, isUnaryExpression, isVariableDeclaration, isVariableUsage, UnaryExpression } from './ast.js';
 
 export function initializeTypir() {
@@ -64,27 +64,6 @@ export function initializeTypir() {
         }
         return InferenceRuleNotApplicable;
     });
-
-    typir.validation.Collector.addValidationRule(
-        (node: unknown) => {
-            if (isPrintout(node)) {
-                const actual = typir.Inference.inferType(node.value)!;
-                if(!Array.isArray(actual)) {
-                    const expected = typeString;
-                    const result = typir.Assignability.getAssignabilityResult(actual, expected);
-                    if(isAssignabilityProblem(result)) {
-                        return [{
-                            $problem: 'ValidationProblem',
-                            languageNode: node,
-                            message: 'Not assignable!',
-                            severity: 'error'
-                        }];
-                    }
-                }
-            }
-            return [];
-        }
-    );
 
     return typir;
 }
