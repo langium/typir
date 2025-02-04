@@ -3,7 +3,7 @@
  * This program and the accompanying materials are made available under the
  * terms of the MIT License, which is available in the project root.
  ******************************************************************************/
-import { createTypirServices, InferenceRuleNotApplicable, InferOperatorWithMultipleOperands, InferOperatorWithSingleOperand } from 'typir';
+import { createTypirServices, InferenceRuleNotApplicable, InferOperatorWithMultipleOperands, InferOperatorWithSingleOperand, NO_PARAMETER_NAME } from 'typir';
 import { BinaryExpression, isAstNode, isBinaryExpression, isNumeric, isPrintout, isUnaryExpression, isVariableDeclaration, isVariableUsage, UnaryExpression } from './ast.js';
 
 export function initializeTypir() {
@@ -15,10 +15,10 @@ export function initializeTypir() {
         ]
     });
     const typeString = typir.factory.Primitives.create({
-        primitiveName: 'void', inferenceRules:
+        primitiveName: 'string', inferenceRules:
             (node: unknown) => isAstNode(node) && node.type === 'string'
     });
-    //const typeVoid = typir.factory.Primitives.create({ primitiveName: 'void' });
+    const typeVoid = typir.factory.Primitives.create({ primitiveName: 'void' });
 
     const binaryInferenceRule: InferOperatorWithMultipleOperands<BinaryExpression> = {
         filter: isBinaryExpression,
@@ -40,6 +40,20 @@ export function initializeTypir() {
     typir.factory.Operators.createUnary({ name: '+', signature: { operand: typeNumber, return: typeNumber }, inferenceRule: unaryInferenceRule });
     typir.factory.Operators.createUnary({ name: '-', signature: { operand: typeNumber, return: typeNumber }, inferenceRule: unaryInferenceRule });
 
+    typir.factory.Functions.create({
+        functionName: 'print',
+        inputParameters: [{
+            name: 'input',
+            type: typeString,
+        }],
+        outputParameter: { name: NO_PARAMETER_NAME, type: typeVoid },
+        inferenceRuleForCalls: {
+            filter: isPrintout,
+            matching: () => true,
+            inputArguments: (node) => [node.value],
+        }
+    });
+
     typir.Conversion.markAsConvertible(typeNumber, typeString, 'IMPLICIT_EXPLICIT');
 
     typir.Inference.addInferenceRule((languageNode) => {
@@ -47,8 +61,6 @@ export function initializeTypir() {
             return languageNode.value;
         } else if (isVariableUsage(languageNode)) {
             return languageNode.ref;
-        } else if (isPrintout(languageNode)) {
-            return typeString;
         }
         return InferenceRuleNotApplicable;
     });

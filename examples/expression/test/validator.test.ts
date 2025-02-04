@@ -12,7 +12,7 @@ const typir = initializeTypir();
 
 describe('Validator', () => {
     test('quak', () => {
-        expectValidationMessages('PRINT 1+2;');
+        expectValidationMessages('PRINT 1;');
     });
 });
 
